@@ -26,6 +26,11 @@ public class Budget {
 
     public double getMonthlyIncome() { return monthlyIncome; }
 
+    /** Income as plain text for the input box, always with a dot, for example 4000.00 */
+    public String getIncomeForInput() {
+        return String.format(java.util.Locale.US, "%.2f", monthlyIncome);
+    }
+
     public void setMonthlyIncome(double income) {
         if (income < 0) {
             throw new IllegalArgumentException("Income cannot be negative.");

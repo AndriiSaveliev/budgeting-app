@@ -32,7 +32,7 @@
         <form method="post" action="${ctx}/income" class="inline">
             <label>Take home pay per month ($)
                 <input type="text" name="income" required inputmode="decimal"
-                       value="<c:if test='${budget.monthlyIncome > 0}'><fmt:formatNumber value='${budget.monthlyIncome}' pattern='0.00'/></c:if>">
+                       value="<c:if test='${budget.monthlyIncome > 0}'>${budget.incomeForInput}</c:if>">
             </label>
             <button type="submit">Save income</button>
         </form>

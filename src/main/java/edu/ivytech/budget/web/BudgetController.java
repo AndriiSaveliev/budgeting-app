@@ -100,11 +100,23 @@ public class BudgetController {
         return "help";
     }
 
-    /** Accepts "1500", "1,500.00" or "$1500". Throws a friendly message for anything else. */
-    private double parseMoney(String text) {
+    /**
+     * Accepts "1500", "1500.50", "1,500.00", "$1500" and also "1500,50"
+     * (comma as decimal point). Throws a friendly message for anything else.
+     */
+    static double parseMoney(String text) {
+        if (text == null) {
+            throw new IllegalArgumentException("Please enter a valid number.");
+        }
+        String s = text.replace("$", "").replace(" ", "").trim();
+        if (s.matches("\\d+,\\d{1,2}")) {
+            s = s.replace(",", ".");      // 1500,50 means 1500.50
+        } else {
+            s = s.replace(",", "");       // 1,500.00 means 1500.00
+        }
         try {
-            return Double.parseDouble(text.replace("$", "").replace(",", "").trim());
-        } catch (NumberFormatException | NullPointerException e) {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Please enter a valid number.");
         }
     }
